@@ -21,7 +21,7 @@ export const UseFetch = (url: RequestInfo) => {
 
 export const UseFetchSingle = (url: RequestInfo) => {
   const [data, setData] = useState<any>();
-
+  const [refetch, setRefetch] = useState(false);
   const fetchData = async () => {
     try {
       const response = await fetch(url);
@@ -34,8 +34,12 @@ export const UseFetchSingle = (url: RequestInfo) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
-  return { data };
+  }, [refetch]);
+
+  const getData = () => {
+    fetchData();
+  };
+  return { data, getData };
 };
 
 export const UseFetchResult = (url: RequestInfo, searchKey: string) => {

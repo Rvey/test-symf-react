@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { UseFetchSingle } from "../hooks/useFetch";
+import axios from "axios";
 
 const BookReview = () => {
   const params = useParams();
-  const { data: book } = UseFetchSingle(
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+  
+  const { data: book  , getData} = UseFetchSingle(
     `https://127.0.0.1:8000/api/books/${params.id}`
   );
+
+  const handleSubmit = () => {
+    axios.post(" https://127.0.0.1:8000/api/reviews", {
+      fullName,
+      email,
+      comment,
+      creationDate: dayjs().format("YYYY-MM-DD" + "T" + "HH:mm:ss"),
+      book: `api/books/${params.id}`,
+    }).then(() => {
+      getData()}
+      )
+  };
 
   return (
     <div className="bg-white">
@@ -74,21 +91,29 @@ const BookReview = () => {
                 className="w-full py-4 pl-3 pr-16 text-sm border-2 border-gray-200 rounded-lg"
                 type="text"
                 placeholder="full name"
+                name="fullName"
+                value={fullName}
+                onChange={(e: any) => setFullName(e.target.value)}
               />
               <input
                 className="w-full py-4 pl-3 pr-16 text-sm border-2 border-gray-200 rounded-lg"
                 type="text"
                 placeholder="email"
+                value={email}
+                onChange={(e: any) => setEmail(e.target.value)}
               />
               <input
                 className="w-full py-4 pl-3 pr-16 text-sm border-2 border-gray-200 rounded-lg"
                 type="text"
                 placeholder="comment"
+                value={comment}
+                onChange={(e: any) => setComment(e.target.value)}
               />
             </div>
             <button
               className="p-2 px-4 text-sm text-white -translate-y-1/2 bg-blue-600 rounded-md top-1/2 right-4"
               type="button"
+              onClick={handleSubmit}
             >
               Add Review
             </button>
@@ -96,16 +121,17 @@ const BookReview = () => {
               {
                 //@ts-ignore
                 book.reviews.map((review) => (
-                  <div key={review.id} className={"bg-gray-200 p-4 rounded-md"}>
-                    <div className={"flex gap-[10em] justify-between m-3 "}>
-                      <div className={"flex gap-32 font-semibold"}>
+                  <div key={review.id} className={"bg-gray-100 p-4 rounded-md m-1"}>
+                    <div className={"flex gap-[10em] justify-between m-2 "}>
+                      <div className={"flex gap-22 font-semibold"}>
                         <h1>{review.email}</h1>
+                        -
                         <h1>{review.fullName}</h1>
                       </div>
 
                       <h1>{dayjs(review.creationDate).format("DD/MM/YYYY")}</h1>
                     </div>
-                    <h1 className={"p-4 bg-gray-400 rounded-md"}>
+                    <h1 className={"p-4 bg-gray-200 rounded-md"}>
                       {review.comment}
                     </h1>
                   </div>
