@@ -1,46 +1,58 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 export const UseFetch = (url: RequestInfo) => {
-    const [data, setData] = useState<any>();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+  const [data, setData] = useState<any>();
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            setData(data["hydra:member"]);
-            setLoading(false);
-        } catch (error) {
-            setError(true);
-            setLoading(false);
-        }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setData(data["hydra:member"]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-    return {data, loading, error};
+  useEffect(() => {
+    fetchData();
+  }, []);
+  return { data };
 };
 
 export const UseFetchSingle = (url: RequestInfo) => {
-    const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>();
 
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            setData(data)
+  useEffect(() => {
+    fetchData();
+  }, []);
+  return { data };
+};
 
-        } catch (error) {
-            console.log(error)
-        }
-    };
+export const UseFetchResult = (url: RequestInfo, searchKey: string) => {
+  const [searchData, setSearchData] = useState([]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-    return {data};
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setSearchData(data["hydra:member"]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [searchKey]);
+  return { searchData };
 };
