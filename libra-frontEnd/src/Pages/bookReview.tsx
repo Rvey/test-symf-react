@@ -97,7 +97,7 @@ const BookReview = () => {
               />
               <input
                 className="w-full py-4 pl-3 pr-16 text-sm border-2 border-gray-200 rounded-lg"
-                type="text"
+                type="email"
                 placeholder="email"
                 value={email}
                 onChange={(e: any) => setEmail(e.target.value)}
