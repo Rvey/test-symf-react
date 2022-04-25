@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['author:read']] ,
     denormalizationContext: ['groups' => ['author:write']]
 )]
-#[ApiFilter(SearchFilter::class, properties: ["title", "author", "genre"])]
+#[ApiFilter(SearchFilter::class, properties: ["firstName", "lastName"])]
 
 class Author
 {
