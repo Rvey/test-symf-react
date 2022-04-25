@@ -2,9 +2,7 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,39 +10,40 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
-#[ApiResource(denormalizationContext: ['groups' => ['book:write']], normalizationContext: ['groups' => ['book:read']])]
-#[ApiFilter(SearchFilter::class, properties: ["title", "author", "genre"])]
-#[apiFilter(SearchFilter::class, properties: ["title" => "partial"])]
+#[ApiResource(
+    normalizationContext: ['groups' => ['book:read']] ,
+    denormalizationContext: ['groups' => ['book:write']]
+)]
 class Book
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(['book:read'])]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['book:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["author:read", "book:read"])]
+    #[Groups(['book:read' , 'book:write' , 'author:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["author:read", "book:read"])]
+    #[Groups(['book:read' , 'book:write' , 'author:read'])]
     private $description;
 
     #[ORM\Column(type: 'date')]
-    #[Groups(["author:read", "book:read"])]
+    #[Groups(['book:read' , 'book:write' , 'author:read'])]
     private $publicationDate;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["author:read", "book:read"])]
+    #[Groups(['book:read' , 'book:write' , 'author:read'])]
     private $genre;
 
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
-    #[Groups(['book:read'])]
+    #[Groups(['book:read' , 'book:write'])]
     private $author;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Review::class)]
-    #[Groups("book:read")]
+    #[Groups(['book:read' , 'book:write'])]
     private $reviews;
 
     public function __construct()

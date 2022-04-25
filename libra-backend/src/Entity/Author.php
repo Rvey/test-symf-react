@@ -2,9 +2,7 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,32 +10,33 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
-#[ApiResource(denormalizationContext: ['groups' => ['author:write']], normalizationContext: ['groups' => ['author:read']])]
-#[ApiFilter(SearchFilter::class, properties: ["firstName", "lastName"])]
+#[ApiResource(
+    normalizationContext: ['groups' => ['author:read']] ,
+    denormalizationContext: ['groups' => ['author:write']]
+)]
 class Author
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(['author:read'])]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['author:read', "author:write"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['book:read', 'author:read'])]
+    #[Groups(['author:read', "author:write" , "book:read"])]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['book:read', 'author:read'])]
+    #[Groups(['author:read', "author:write" , "book:read"])]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['book:read', 'author:read'])]
+    #[Groups(['author:read', "author:write" , "book:read"])]
     private $bibliography;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
-    #[Groups(['author:read'])]
+    #[Groups(['author:read' , 'author:write'])]
     private $books;
-
 
     public function __construct()
     {
@@ -114,5 +113,4 @@ class Author
 
         return $this;
     }
-
 }
