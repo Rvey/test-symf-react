@@ -16,8 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['book:read']] ,
     denormalizationContext: ['groups' => ['book:write']]
 )]
-#[apiFilter(SearchFilter::class, properties: ["title" => "partial"])]
-#[ApiFilter(SearchFilter::class, properties: ["title", "author", "genre"])]
+#[ApiFilter(SearchFilter::class, properties: ["title" => "ipartial", "author", "genre" => "ipartial"])]
 class Book
 {
     #[ORM\Id]
