@@ -9,11 +9,12 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 class AuthorTest extends ApiTestCase
 {
     
+//    use RefreshDatabaseTrait;
 
     public function testGetCollection(): void
     {
 
-        $response = static::createClient()->request('GET', 'api/authors');
+        static::createClient()->request('GET', 'api/authors');
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -21,9 +22,8 @@ class AuthorTest extends ApiTestCase
 
     public function testPostItem(): void
     {
-        $client = static::createClient();
 
-        $client->request('POST', 'api/authors', [
+        static::createClient()->request('POST', 'api/authors', [
             'json' => [
                 'firstName' => 'authorFirstName',
                 'lastName' => 'authorLstName',
@@ -63,11 +63,11 @@ class AuthorTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
-//    public function testDeleteItem(): void
-//    {
-//        static::createClient()->request('DELETE', 'api/authors/1');
-//
-//        $this->assertResponseStatusCodeSame(204);
-//    }
+    public function testDeleteItem(): void
+    {
+        static::createClient()->request('DELETE', 'api/authors/1');
+
+        $this->assertResponseStatusCodeSame(204);
+    }
 
 }
