@@ -8,6 +8,7 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class AuthorTest extends ApiTestCase
 {
+
 //a workaround to purge the database before each test it seems to no work properly
 //    use RefreshDatabaseTrait;
 
@@ -23,9 +24,8 @@ class AuthorTest extends ApiTestCase
 
     public function testPostAuthor(): void
     {
-        $client = static::createClient();
 
-        $client->request('POST', 'api/authors', [
+        static::createClient()->request('POST', 'api/authors', [
             'json' => [
                 'firstName' => 'authorFirstName',
                 'lastName' => 'authorLstName',
