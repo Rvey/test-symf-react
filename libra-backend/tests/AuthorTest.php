@@ -8,23 +8,20 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class AuthorTest extends ApiTestCase
 {
-<<<<<<< Updated upstream
-    
-=======
-
+//a workaround to purge the database before each test it seems to no work properly
 //    use RefreshDatabaseTrait;
->>>>>>> Stashed changes
 
-    public function testGetCollection(): void
+
+    public function testGetAuthors(): void
     {
 
-        $response = static::createClient()->request('GET', 'api/authors');
+        static::createClient()->request('GET', 'api/authors');
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
     }
 
-    public function testPostItem(): void
+    public function testPostAuthor(): void
     {
         $client = static::createClient();
 
@@ -53,7 +50,7 @@ class AuthorTest extends ApiTestCase
     }
 
 
-    public function testPutItem(): void
+    public function testUpdateAuthor(): void
     {
 
         static::createClient()->request('PUT', 'api/authors/1', [
@@ -68,11 +65,11 @@ class AuthorTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
-//    public function testDeleteItem(): void
-//    {
-//        static::createClient()->request('DELETE', 'api/authors/1');
-//
-//        $this->assertResponseStatusCodeSame(204);
-//    }
+    public function testDeleteAuthor(): void
+    {
+        static::createClient()->request('DELETE', 'api/authors/1');
+
+        $this->assertResponseStatusCodeSame(204);
+    }
 
 }
