@@ -48,22 +48,60 @@ class AuthorTest extends ApiTestCase
 
     public function testUpdateAuthor(): void
     {
+        $iri = static::createClient()->request('POST', 'api/authors', [
 
-        static::createClient()->request('PUT', 'api/authors/1', [
             'json' => [
-                'firstName' => 'authorFirstNameUpdated',
+
+                'firstName' => 'authorFirstName',
+
                 'lastName' => 'authorLstName',
+
                 'bibliography' => 'the shadow of the sun',
+
                 'books' => []
+
+            ],
+
+        ])->toArray()['@id'];
+
+        static::createClient()->request('PUT', $iri, [
+            'json' => [
+
+                'firstName' => 'authorFirstNameUpdated',
+
+                'lastName' => 'authorLstName',
+
+                'bibliography' => 'the shadow of the sun',
+
+                'books' => []
+                
             ],
         ]);
 
         $this->assertResponseIsSuccessful();
+
     }
 
     public function testDeleteAuthor(): void
     {
-        static::createClient()->request('DELETE', 'api/authors/1');
+
+        $iri = static::createClient()->request('POST', 'api/authors', [
+
+            'json' => [
+
+                'firstName' => 'authorFirstName',
+
+                'lastName' => 'authorLstName',
+
+                'bibliography' => 'the shadow of the sun',
+
+                'books' => []
+
+            ],
+
+        ])->toArray()['@id'];
+
+        static::createClient()->request('DELETE', $iri);
 
         $this->assertResponseStatusCodeSame(204);
     }
