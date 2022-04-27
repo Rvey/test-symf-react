@@ -22,7 +22,7 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['book:read'])]
+    #[Groups(['book:read' , 'book:write'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
