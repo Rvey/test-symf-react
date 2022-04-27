@@ -4,14 +4,9 @@ namespace App\Tests;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\Author;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class AuthorTest extends ApiTestCase
 {
-
-//a workaround to purge the database before each test it seems to no work properly
-// uncomment run test (failed) then comment again and run test (pass)
-//    use RefreshDatabaseTrait;
 
 
     public function testGetAuthors(): void
