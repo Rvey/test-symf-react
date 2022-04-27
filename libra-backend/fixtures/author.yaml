@@ -1,8 +1,0 @@
-App\Entity\Author:
-author_{1..100}:
-  firstName: <text()>
-  lastName: <text()>
-  bibliography: <text()>
-  books: '<array()>'
-
-
