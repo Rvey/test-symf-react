@@ -74,7 +74,7 @@ class AuthorTest extends ApiTestCase
                 'bibliography' => 'the shadow of the sun',
 
                 'books' => []
-                
+
             ],
         ]);
 
