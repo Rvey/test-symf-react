@@ -48,7 +48,7 @@ class AuthorTest extends ApiTestCase
 
     public function testUpdateAuthor(): void
     {
-        $iri = static::createClient()->request('POST', 'api/authors', [
+        $response = static::createClient()->request('POST', 'api/authors', [
 
             'json' => [
 
@@ -62,23 +62,27 @@ class AuthorTest extends ApiTestCase
 
             ],
 
-        ])->toArray()['@id'];
+        ]);
+
+        $iri = $response->toArray()['@id'];
 
         static::createClient()->request('PUT', $iri, [
             'json' => [
 
                 'firstName' => 'authorFirstNameUpdated',
 
-                'lastName' => 'authorLstName',
-
-                'bibliography' => 'the shadow of the sun',
-
-                'books' => []
-
             ],
         ]);
 
         $this->assertResponseIsSuccessful();
+        $this->assertJsonContains([
+
+            '@id' => $iri,
+
+            'firstName' => 'authorFirstNameUpdated',
+
+        ]);
+
 
     }
 
