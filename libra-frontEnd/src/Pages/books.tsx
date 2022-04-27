@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Books = () => {
   const [searchKey, setSearch] = useState("");
 
-  const { data } = UseFetch(`https://127.0.0.1:8000/api/books`);
+  const { data } = UseFetch("https://127.0.0.1:8000/api/books");
 
   const { searchData } = UseFetchResult(
     `https://127.0.0.1:8000/api/books?page=1&title=${searchKey}`,
@@ -17,6 +17,7 @@ const Books = () => {
   const navigate = useNavigate();
   return (
     <div>
+      
       <Hero />
 
       <div className="mb-6">
@@ -39,6 +40,7 @@ const Books = () => {
                 onClick={() => navigate(`/bookReview/${book.id}`)}
               >
                 <BookCard
+                id={book.id}
                   title={book.title}
                   author={book.author}
                   genre={book.genre}

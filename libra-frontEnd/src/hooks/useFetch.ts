@@ -9,7 +9,7 @@ export const UseFetch = (url: RequestInfo) => {
       const data = await response.json();
       setData(data["hydra:member"]);
     } catch (error) {
-      console.log(error);
+     
     }
   };
 

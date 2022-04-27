@@ -1,8 +1,7 @@
-import React from "react";
+const BookCard = ({id ,title, author, genre }: any) => {
 
-const BookCard = ({ title, author, genre }: any) => {
   return (
-    <div className={"bg-black h-[15em] w-[12em] rounded-md group relative"}>
+    <div data-testid={`book-${id}`} className={"bg-black h-[15em] w-[12em] rounded-md group relative"}>
       <div
         className={
           "h-[15em] w-[12em] bg-red-400 rounded-md flex flex-col justify-between p-2 hover:-translate-x-2 hover:-translate-y-2 transition-all cursor-pointer"
@@ -16,18 +15,18 @@ const BookCard = ({ title, author, genre }: any) => {
           {title}
         </h1>
         <div className={"bg-gray-300 p-2 rounded-md bg-opacity-50"}>
-          <h1 className={"text-white font-bold text-xl"}>{genre}</h1>
-          <h1 className={"font-bold text-xl text-gray-800"}>
+          <h2 className={"text-white font-bold text-xl"}>{genre}</h2>
+          <h3 className={"font-bold text-xl text-gray-800"}>
             {author["firstName"]} {author["lastName"]}
-          </h1>
+          </h3>
         </div>
-        <h1
+        <button
           className={
             "text-white font-bold text-xl group-hover:block hidden border-gray-50 border-4 text-center "
           }
         >
           More Info
-        </h1>
+        </button>
       </div>
     </div>
   );

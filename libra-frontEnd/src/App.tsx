@@ -1,6 +1,7 @@
+import BookReview from "Pages/bookReview";
+import Books from "Pages/books";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Books from "./Pages/books";
-import BookReview from "./Pages/bookReview";
+
 
 function App() {
   return (
