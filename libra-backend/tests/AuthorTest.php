@@ -8,7 +8,12 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class AuthorTest extends ApiTestCase
 {
+<<<<<<< Updated upstream
     
+=======
+
+//    use RefreshDatabaseTrait;
+>>>>>>> Stashed changes
 
     public function testGetCollection(): void
     {
